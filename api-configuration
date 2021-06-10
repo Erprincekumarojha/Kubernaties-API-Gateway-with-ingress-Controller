@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ti-agastya-ingress
+  namespace: agastya
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /assist(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-assist
+            port:
+              number: 80
+      - path: /device(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-device
+            port:
+              number: 80
+      - path: /graph(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-graph
+            port:
+              number: 80
+      - path: /login(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-login
+            port:
+              number: 80
+      - path: /notification(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-notification
+            port:
+              number: 80
+      - path: /register(.+)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-register
+            port:
+              number: 80
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: vitalz-assist
+            port:
+              number: 80
